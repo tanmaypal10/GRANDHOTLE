@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Premium navy + gold palette */
+    --background: 220 30% 7%;
+    --foreground: 40 30% 96%;
+
+    --card: 220 28% 10%;
+    --card-foreground: 40 30% 96%;
+
+    --popover: 220 28% 10%;
+    --popover-foreground: 40 30% 96%;
+
+    --primary: 43 74% 55%;
+    --primary-foreground: 220 35% 8%;
+
+    --secondary: 220 25% 14%;
+    --secondary-foreground: 40 30% 96%;
+
+    --muted: 220 20% 16%;
+    --muted-foreground: 40 10% 70%;
+
+    --accent: 43 80% 60%;
+    --accent-foreground: 220 35% 8%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 40 30% 96%;
+
+    --border: 220 20% 18%;
+    --input: 220 20% 18%;
+    --ring: 43 74% 55%;
+
+    /* Hotel tokens */
+    --hotel-luxury: 220 35% 12%;
+    --hotel-navy: 222 45% 11%;
+    --hotel-gold: 43 78% 55%;
+    --hotel-gold-glow: 45 90% 65%;
+    --hotel-warm: 28 80% 55%;
+    --hotel-cool: 215 50% 30%;
+
+    --gradient-luxury: linear-gradient(135deg, hsl(220 35% 8%), hsl(220 40% 14%));
+    --gradient-gold: linear-gradient(135deg, hsl(43 78% 55%), hsl(35 85% 50%));
+    --gradient-hero: linear-gradient(135deg, hsl(220 40% 6% / 0.85) 0%, hsl(220 50% 12% / 0.55) 100%);
+    --gradient-glow: radial-gradient(circle at 50% 0%, hsl(43 78% 55% / 0.18), transparent 60%);
+
+    --shadow-luxury: 0 30px 80px -20px hsl(0 0% 0% / 0.6);
+    --shadow-gold: 0 10px 40px -10px hsl(43 78% 55% / 0.5);
+    --shadow-elegant: 0 20px 50px -25px hsl(0 0% 0% / 0.7);
+    --shadow-glow: 0 0 30px hsl(43 78% 55% / 0.35);
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 220 35% 8%;
+    --sidebar-foreground: 40 20% 85%;
+    --sidebar-primary: 43 78% 55%;
+    --sidebar-primary-foreground: 220 35% 8%;
+    --sidebar-accent: 220 30% 14%;
+    --sidebar-accent-foreground: 40 30% 96%;
+    --sidebar-border: 220 25% 18%;
+    --sidebar-ring: 43 78% 55%;
+  }
+
+  .light {
+    --background: 40 30% 98%;
+    --foreground: 220 35% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 35% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 35% 10%;
+    --primary: 220 45% 18%;
+    --primary-foreground: 40 30% 98%;
+    --secondary: 40 20% 94%;
+    --secondary-foreground: 220 35% 10%;
+    --muted: 40 20% 94%;
+    --muted-foreground: 220 10% 40%;
+    --accent: 43 78% 55%;
+    --accent-foreground: 220 35% 10%;
+    --border: 220 15% 88%;
+    --input: 220 15% 88%;
+    --ring: 43 78% 55%;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Playfair Display', serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply backdrop-blur-xl bg-white/5 border border-white/10;
+  }
+  .glass-strong {
+    @apply backdrop-blur-2xl bg-white/10 border border-white/15;
+  }
+  .gold-text {
+    background: linear-gradient(135deg, hsl(45 95% 70%), hsl(38 80% 50%));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .glow-gold {
+    box-shadow: 0 0 40px hsl(43 78% 55% / 0.4);
+  }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.animate-float { animation: float-slow 6s ease-in-out infinite; }
