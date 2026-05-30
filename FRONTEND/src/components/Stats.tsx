@@ -1,6 +1,6 @@
 import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
-import { useEffect, useRef } from "react";
-import { stats } from "@/data/hotelData";
+import { useEffect, useRef, useState } from "react";
+import { api } from "@/lib/api";
 
 const Counter = ({ to, suffix }: { to: number; suffix: string }) => {
   const ref = useRef<HTMLSpanElement>(null);
@@ -20,6 +20,27 @@ const Counter = ({ to, suffix }: { to: number; suffix: string }) => {
 };
 
 export const Stats = () => {
+  const [stats, setStats] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const data = await api.getStats();
+        setStats(data);
+      } catch (err) {
+        console.error("Error loading stats:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchStats();
+  }, []);
+
+  if (loading) {
+    return <div className="py-12 text-center text-muted-foreground font-light">Loading statistics...</div>;
+  }
+
   return (
     <section className="py-24 relative overflow-hidden border-y border-white/10">
       <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--hotel-navy))] to-[hsl(var(--hotel-luxury))]" />
@@ -28,7 +49,7 @@ export const Stats = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((s, i) => (
             <motion.div
-              key={s.label}
+              key={s._id || s.label}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

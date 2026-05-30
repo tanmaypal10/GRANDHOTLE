@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Premium navy + gold palette */
+  --background: #0b0f19;
+  --foreground: #f4f2ee;
+
+  --card: #121824;
+  --card-foreground: #f4f2ee;
+
+  --popover: #121824;
+  --popover-foreground: #f4f2ee;
+
+  --primary: #d4af37;
+  --primary-foreground: #0c101a;
+
+  --secondary: #1a2336;
+  --secondary-foreground: #f4f2ee;
+
+  --muted: #202b40;
+  --muted-foreground: #b2b0ac;
+
+  --accent: #e5c158;
+  --accent-foreground: #0c101a;
+
+  --destructive: #d32f2f;
+  --destructive-foreground: #f4f2ee;
+
+  --border: #222e45;
+  --input: #222e45;
+  --ring: #d4af37;
+
+  --hotel-navy: #090d16;
+  --hotel-gold: #d4af37;
+  --hotel-gold-glow: #eacc55;
+  --hotel-warm: #bd731d;
+  --hotel-cool: #182e4e;
+
+  --radius: 0.75rem;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  margin: 0;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.glass {
+  backdrop-filter: blur(16px);
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-strong {
+  backdrop-filter: blur(24px);
+  background-color: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.gold-text {
+  background: linear-gradient(135deg, #f7d070, #c4992b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.glow-gold {
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+}
+
+.glow-gold-hover:hover {
+  box-shadow: 0 0 40px rgba(212, 175, 55, 0.5);
+  transform: translateY(-2px);
+}

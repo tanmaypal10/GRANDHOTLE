@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,6 +15,7 @@ const Auth = () => {
   const [password, setPassword] = useState("admin123");
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("guest");
+  const { signInWithPassword, signUp: authSignUp } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -24,26 +25,22 @@ const Auth = () => {
 
     try {
       if (isLogin) {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) throw error;
+        await signInWithPassword(email, password);
         toast({ title: "Welcome back!", description: "You have been logged in successfully." });
         navigate(activeTab === "staff" ? "/staff-dashboard" : "/guest-portal");
       } else {
-        const { error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: { emailRedirectTo: window.location.origin },
-        });
-        if (error) throw error;
+        const role = activeTab === "staff" ? "staff" : "guest";
+        await authSignUp(email, password, email.split("@")[0], role);
         toast({
           title: "Account created!",
-          description: "Please check your email to verify your account before signing in.",
+          description: "Your account has been created and you are now logged in.",
         });
+        navigate(activeTab === "staff" ? "/staff-dashboard" : "/guest-portal");
       }
     } catch (error: any) {
       toast({
         title: "Error",
-        description: error.message,
+        description: error.message || "Authentication failed",
         variant: "destructive",
       });
     } finally {

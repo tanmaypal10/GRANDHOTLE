@@ -1,11 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
-import { galleryImages } from "@/data/hotelData";
+import { api } from "@/lib/api";
 import { SectionHeading } from "./Rooms";
 
 export const Gallery = () => {
   const [active, setActive] = useState<string | null>(null);
+  const [galleryImages, setGalleryImages] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchGallery = async () => {
+      try {
+        const data = await api.getGallery();
+        setGalleryImages(data);
+      } catch (err) {
+        console.error("Error loading gallery:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchGallery();
+  }, []);
+
+  if (loading) {
+    return <div className="py-12 text-center text-muted-foreground font-light">Loading gallery portfolio...</div>;
+  }
+
   return (
     <section id="gallery" className="py-24">
       <div className="container mx-auto px-4">
@@ -14,13 +35,13 @@ export const Gallery = () => {
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 auto-rows-[200px] gap-4">
           {galleryImages.map((img, i) => (
             <motion.button
-              key={i}
+              key={img._id || i}
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.06 }}
               onClick={() => setActive(img.src)}
-              className={`relative group overflow-hidden rounded-xl ${img.span}`}
+              className={`relative group overflow-hidden rounded-xl ${img.span || ""}`}
             >
               <img src={img.src} alt={img.alt} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
